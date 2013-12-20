@@ -18,6 +18,23 @@ angular.module('arvak.controllers').controller('HomeCtrl', ['$scope','navSvc','$
     };
 }]);
 
+
+angular.module('arvak.controllers').controller('LoginCtrl', ['$scope', 'templateCache', function($scope, templateCache){
+    alert('i happened');
+    templateCache.getDataById(1)
+        .then(function (data) {
+            // e.g. "time taken for request: 2375ms"
+            // Data returned by this next call is already cached.
+            myService.getDataById(1)
+                .then(function (data) {
+                    // e.g. "time taken for request: 1ms"
+                });
+        });
+
+
+}]);
+
+
 angular.module('arvak.controllers').controller('NotificationCtrl', ['$scope', 'notification', function($scope, notification) {
     $scope.alertNotify = function() {
         notification.alert("Sample Alert",function() {console.log("Alert success")},"My Alert","Close");
@@ -71,6 +88,7 @@ angular.module('arvak.controllers').controller('DeviceCtrl', ['$scope', 'device'
     $scope.device = window.device;
 }]);
 
+//This is broken for some reason.
 angular.module('arvak.controllers').controller('CompassCtrl', ['$scope', 'compass', function($scope, compass) {
     compass.getCurrentHeading(function (heading) {
         $scope.heading  = heading;

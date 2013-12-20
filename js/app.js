@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 //angular.module('arvak', ['arvak.controllers', 'arvak.filters', 'arvak.services', 'arvak.directives','ajoslin.mobile-navigate','ngMobile'])
-angular.module('arvak', ['arvak.controllers', 'arvak.filters', 'arvak.services', 'cordova.services', 'arvak.directives','ajoslin.mobile-navigate','ngMobile'])
+angular.module('arvak', ['arvak.controllers', 'arvak.filters', 'arvak.services', 'cordova.services', 'jmdobry.angular-cache', 'arvak.directives','ajoslin.mobile-navigate','ngMobile'])
     .config(function ($compileProvider){
         $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })

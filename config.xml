@@ -9,7 +9,7 @@
     <name>RadioField Mobile</name>
 
     <description>
-        The beginnings of the RadioField Cordova 3  Application.
+        The beginnings of the new RadioField Cordova 3  Application.
     </description>
 
     <author href="http://cargotel.com" email="caprid@cargotel.com">
@@ -44,6 +44,7 @@
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.media-capture" />
     <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.compass" />
     <gap:plugin name="org.apache.cordova.contacts" />
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.device-motion" />

@@ -247,3 +247,40 @@ angular.module('cordova.services').factory('contactsSvc', function ($rootScope, 
 
 
 
+angular.module('arvak.services').service('templateCache', function ($http, $q, $angularCacheFactory) {
+
+    $angularCacheFactory('dataCache', {
+        maxAge: 900000, // Items added to this cache expire after 15 minutes.
+        cacheFlushInterval: 3600000, // This cache will clear itself every hour.
+        deleteOnExpire: 'aggressive', // Items will be deleted from this cache right when they expire.
+        storageMode: 'localStorage'
+    });
+
+    return {
+        getDataById: function (id) {
+            var deferred = $q.defer(),
+                start = new Date().getTime(),
+                dataCache = $angularCacheFactory.get('dataCache');
+
+            // Now that control of inserting/removing from the cache is in our hands,
+            // we can interact with the data in "dataCache" outside of this context,
+            // e.g. Modify the data after it has been returned from the server and
+            // save those modifications to the cache.
+            if (dataCache.get(id)) {
+                deferred.resolve(dataCache.get(id));
+            } else {
+                $http.get('http://10.0.1.21:9000/basic.html').success(function (data) {
+                        console.log('time taken for request: ' + (new Date().getTime() - start) + 'ms');
+                        deferred.resolved(data);
+                    });
+            }
+            return deferred.promise;
+        }
+    };
+});
+
+
+
+
+
+
