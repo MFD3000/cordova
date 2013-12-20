@@ -267,10 +267,12 @@ angular.module('arvak.services').service('templateCache', function ($http, $q, $
             // e.g. Modify the data after it has been returned from the server and
             // save those modifications to the cache.
             if (dataCache.get(id)) {
+                alert('loaded from localstorage');
                 deferred.resolve(dataCache.get(id));
             } else {
                 $http.get('http://10.0.1.21:9000/basic.html').success(function (data) {
                         console.log('time taken for request: ' + (new Date().getTime() - start) + 'ms');
+                        alert('loaded from web');
                         deferred.resolved(data);
                     });
             }
