@@ -1,7 +1,8 @@
 'use strict';
-
+angular.module('arvak.controllers', []);
 /* Controllers */
-function HomeCtrl($scope,navSvc,$rootScope) {
+angular.module('arvak.controllers').controller('HomeCtrl', ['$scope','navSvc','$rootScope', function($scope,navSvc,$rootScope) {
+    console.log('initialized');
     $rootScope.showSettings = false;
     $scope.slidePage = function (path,type) {
         navSvc.slidePage(path,type);
@@ -15,9 +16,9 @@ function HomeCtrl($scope,navSvc,$rootScope) {
     $scope.closeOverlay = function () {
         $rootScope.showSettings = false;
     };
-}
+}]);
 
-function NotificationCtrl($scope, notification) {
+angular.module('arvak.controllers').controller('NotificationCtrl', ['$scope', 'notification', function($scope, notification) {
     $scope.alertNotify = function() {
         notification.alert("Sample Alert",function() {console.log("Alert success")},"My Alert","Close");
     };
@@ -33,9 +34,9 @@ function NotificationCtrl($scope, notification) {
     $scope.confirmNotify = function() {
         notification.confirm("My Confirmation",function(){console.log("Confirm Success")},"Are you sure?",["Ok","Cancel"]);
     };
-}
+}]);
 
-function GeolocationCtrl($scope,navSvc, geolocation) {
+angular.module('arvak.controllers').controller('GeolocationCtrl', ['$scope', 'navSvc','geolocation', function($scope,navSvc, geolocation) {
 
     geolocation.getCurrentPosition(function(position) {
        
@@ -46,9 +47,9 @@ function GeolocationCtrl($scope,navSvc, geolocation) {
     $scope.back = function () {
         navSvc.back();
     };
-}
+}]);
 
-function NetworkConnectionCtrl($scope,navSvc, networkConnection) {
+angular.module('arvak.controllers').controller('NetworkConnectionCtrl',['$scope', 'navSvc','networkConnection', function($scope,navSvc, networkConnection) {
 
     $scope.connectionType = networkConnection.getConnectionType(); 
        
@@ -57,26 +58,26 @@ function NetworkConnectionCtrl($scope,navSvc, networkConnection) {
     $scope.back = function () {
         navSvc.back();
     };
-}
+}]);
 
-function AccelerCtrl($scope) {
-    navigator.accelerometer.getCurrentAcceleration(function (acceleration) {
+angular.module('arvak.controllers').controller('AccelerCtrl',['$scope', 'accelerometer', function($scope, accelerometer) {
+    accelerometer.getCurrentAcceleration(function (acceleration) {
         $scope.acceleration  = acceleration;
         },function(e) { console.log("Error finding acceleration " + e) });
-}
+}]);
 
-function DeviceCtrl($scope) {
+angular.module('arvak.controllers').controller('DeviceCtrl', ['$scope', 'device', function($scope, device) {
     $scope.device = device;
-}
+}]);
 
-function CompassCtrl($scope) {
-    navigator.compass.getCurrentHeading(function (heading) {
+angular.module('arvak.controllers').controller('CompassCtrl', ['$scope', 'compass', function($scope, compass) {
+    compass.getCurrentHeading(function (heading) {
         $scope.heading  = heading;
         $scope.$apply();
     },function(e) { console.log("Error finding compass " + e.code) });
-}
+}]);
 
-function HackerNewsCtrl($scope, $rootScope) {
+angular.module('arvak.controllers').controller('HackerNewsCtrl', ['$scope', '$rootscope', 'notification', function($scope, $rootScope, notification) {
 
     // load in data from hacker news unless we already have
     if (!$rootScope.items) {     
@@ -92,12 +93,12 @@ function HackerNewsCtrl($scope, $rootScope) {
     }
 
     $scope.loadItem = function(item) {
-        navigator.notification.alert(item.url,function() {console.log("Alert success")},"My Alert","Close");
+        notification.alert(item.url,function() {console.log("Alert success")},"My Alert","Close");
     };
-}
+}]);
 
 
-function ContactsCtrl($scope) {
+angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contacts', function($scope, contacts) {
     $scope.find = function() {
         $scope.contacts = [];
         var options = new ContactFindOptions();
@@ -105,14 +106,14 @@ function ContactsCtrl($scope) {
         options.filter=$scope.searchTxt;
         options.multiple=true;
         var fields = ["displayName", "name", "phoneNumbers"];
-        navigator.contacts.find(fields,function(contacts) {
+        contacts.find(fields,function(contacts) {
             $scope.contacts=contacts;
             $scope.$apply();
         },function(e){console.log("Error finding contacts " + e.code)},options);
     }
-}
+}]);
 
-function CameraCtrl($scope) {
+angular.module('arvak.controllers').controller('CameraCtrl', ['$scope', 'camera', function($scope, camera) {
     $scope.takePic = function() {
         var options =   {
             quality: 50,
@@ -121,7 +122,7 @@ function CameraCtrl($scope) {
             encodingType: 0     // 0=JPG 1=PNG
         }
         // Take picture using device camera and retrieve image as base64-encoded string
-        navigator.camera.getPicture(onSuccess,onFail,options);
+        camera.getPicture(onSuccess,onFail,options);
     }
     var onSuccess = function(imageData) {
         console.log("On Success! ");
@@ -131,7 +132,7 @@ function CameraCtrl($scope) {
     var onFail = function(e) {
         console.log("On fail " + e);
     };
-}
+}]);
 
 
 

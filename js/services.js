@@ -3,10 +3,12 @@
 /* Services */
 
 // Simple value service.
-angular.module('myApp.services', []).
+angular.module('arvak.services', []).
   value('version', '0.1');
 
-myApp.factory('cordovaReady', function() {
+angular.module('cordova.services', []);
+
+ angular.module('cordova.services').factory('cordovaReady', function() {
   return function (fn) {
 
     var queue = [];
@@ -28,7 +30,7 @@ myApp.factory('cordovaReady', function() {
   };
 });
 
-myApp.factory('geolocation', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('geolocation', function ($rootScope, cordovaReady) {
   return {
     getCurrentPosition: cordovaReady(function (onSuccess, onError, options) {
         navigator.geolocation.getCurrentPosition(function () {
@@ -55,7 +57,34 @@ myApp.factory('geolocation', function ($rootScope, cordovaReady) {
     };
 });
 
-myApp.factory('networkConnection', function (cordovaReady) {
+angular.module('cordova.services').factory('camera', function ($rootScope, cordovaReady) {
+  return {
+    getCurrentPosition: cordovaReady(function (onSuccess, onError, options) {
+        navigator.camera.getPicture(function () {
+               var that = this,
+               args = arguments;
+
+               if (onSuccess) {
+                   $rootScope.$apply(function () {
+                        onSuccess.apply(that, args);
+                   });
+                   }
+               }, function () {
+                    var that = this,
+                    args = arguments;
+
+                   if (onError) {
+                        $rootScope.$apply(function () {
+                            onError.apply(that, args);
+                        });
+                   }
+               },
+            options);
+        })
+    };
+});
+
+angular.module('cordova.services').factory('networkConnection', function (cordovaReady) {
   return {
     getConnectionType: cordovaReady(function () {
           var networkState = navigator.connection.type;
@@ -82,8 +111,15 @@ myApp.factory('networkConnection', function (cordovaReady) {
     };
 });
 
+angular.module('cordova.services').service('device', function (cordovaReady) {
+  return cordovaReady(window.device);
+        
+        
+  
+ 
+});
 
-myApp.factory('accelerometer', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('accelerometer', function ($rootScope, cordovaReady) {
     return {
         getCurrentAcceleration: cordovaReady(function (onSuccess, onError) {
             navigator.accelerometer.getCurrentAcceleration(function () {
@@ -109,7 +145,7 @@ myApp.factory('accelerometer', function ($rootScope, cordovaReady) {
     };
 });
 
-myApp.factory('notification', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('notification', function ($rootScope, cordovaReady) {
     return {
         alert: cordovaReady(function (message, alertCallback, title, buttonName) {
             navigator.notification.alert(message, function () {
@@ -140,7 +176,7 @@ myApp.factory('notification', function ($rootScope, cordovaReady) {
     };
 });
 
-myApp.factory('navSvc', function($navigate) {
+angular.module('arvak.services').factory('navSvc', function($navigate) {
     return {
         slidePage: function (path,type) {
             $navigate.go(path,type);
@@ -151,7 +187,7 @@ myApp.factory('navSvc', function($navigate) {
     }
 });
 
-myApp.factory('compass', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('compass', function ($rootScope, cordovaReady) {
     return {
         getCurrentHeading: cordovaReady(function (onSuccess, onError) {
             navigator.compass.getCurrentHeading(function () {
@@ -177,7 +213,7 @@ myApp.factory('compass', function ($rootScope, cordovaReady) {
     };
 });
 
-myApp.factory('contacts', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('contacts', function ($rootScope, cordovaReady) {
     return {
         findContacts: cordovaReady(function (onSuccess, onError) {
             var options = new ContactFindOptions();
@@ -204,6 +240,7 @@ myApp.factory('contacts', function ($rootScope, cordovaReady) {
         })
     }
 });
+
 
 
 
