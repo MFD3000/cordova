@@ -27,4 +27,3 @@
     <content src="index.html" />
     <access origin="*" />
 </widget>
- <gap:plugin name="org.apache.cordova.geolocation" />
