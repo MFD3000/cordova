@@ -99,7 +99,7 @@ angular.module('arvak.controllers').controller('HackerNewsCtrl', ['$scope', '$ro
 }]);
 
 
-angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contactsSvc', function($scope, contacts) {
+angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contactsSvc', function($scope, contactsSvc) {
     //Not properly integrated with service
 
     $scope.find = function() {
