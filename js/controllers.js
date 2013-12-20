@@ -67,7 +67,8 @@ angular.module('arvak.controllers').controller('AccelerCtrl',['$scope', 'acceler
 }]);
 
 angular.module('arvak.controllers').controller('DeviceCtrl', ['$scope', 'device', function($scope, device) {
-    $scope.device = device;
+    //Not properly integrated with service
+    $scope.device = window.device;
 }]);
 
 angular.module('arvak.controllers').controller('CompassCtrl', ['$scope', 'compass', function($scope, compass) {
@@ -98,7 +99,9 @@ angular.module('arvak.controllers').controller('HackerNewsCtrl', ['$scope', '$ro
 }]);
 
 
-angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contacts', function($scope, contacts) {
+angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contactsSvc', function($scope, contacts) {
+    //Not properly integrated with service
+
     $scope.find = function() {
         $scope.contacts = [];
         var options = new ContactFindOptions();
@@ -106,7 +109,7 @@ angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contac
         options.filter=$scope.searchTxt;
         options.multiple=true;
         var fields = ["displayName", "name", "phoneNumbers"];
-        contacts.find(fields,function(contacts) {
+        contactsSvc.findContacts(fields,function(contacts) {
             $scope.contacts=contacts;
             $scope.$apply();
         },function(e){console.log("Error finding contacts " + e.code)},options);

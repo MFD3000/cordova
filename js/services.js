@@ -213,30 +213,11 @@ angular.module('cordova.services').factory('compass', function ($rootScope, cord
     };
 });
 
-angular.module('cordova.services').factory('contacts', function ($rootScope, cordovaReady) {
+angular.module('cordova.services').factory('contactsSvc', function ($rootScope, cordovaReady) {
     return {
-        findContacts: cordovaReady(function (onSuccess, onError) {
-            var options = new ContactFindOptions();
-            options.filter="";
-            options.multiple=true;
-            var fields = ["displayName", "name"];
-            navigator.contacts.find(fields, function(r){console.log("Success" +r.length);var that = this,
-                args = arguments;
-                if (onSuccess) {
-                    $rootScope.$apply(function () {
-                        onSuccess.apply(that, args);
-                    });
-                }
-            }, function () {
-                var that = this,
-                    args = arguments;
-
-                if (onError) {
-                    $rootScope.$apply(function () {
-                        onError.apply(that, args);
-                    });
-                }
-            }, options)
+        findContacts: cordovaReady(function (fields, onSuccess, onError, options) {
+            
+            navigator.contacts.find(fields,onSuccess, onError, options);
         })
     }
 });
