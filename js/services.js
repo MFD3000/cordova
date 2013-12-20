@@ -255,7 +255,7 @@ angular.module('arvak.services').service('templateCache', function ($http, $q, $
         deleteOnExpire: 'aggressive', // Items will be deleted from this cache right when they expire.
         storageMode: 'localStorage'
     });
-
+ $http.defaults.cache = $angularCacheFactory.get('dataCache');
     return {
         getDataById: function (id) {
             var deferred = $q.defer(),
@@ -271,9 +271,12 @@ angular.module('arvak.services').service('templateCache', function ($http, $q, $
                 deferred.resolve(dataCache.get(id));
             } else {
                 $http.get('http://10.0.1.21:9000/basic.html').success(function (data) {
+                //$http.get('partials/basic.html').success(function (data) {
                         console.log('time taken for request: ' + (new Date().getTime() - start) + 'ms');
-                        alert('loaded from web');
-                        deferred.resolved(data);
+                        //alert('loaded from web' + data);
+
+                        deferred.resolve(data);
+                        console.log('bla');
                     });
             }
             return deferred.promise;

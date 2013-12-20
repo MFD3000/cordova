@@ -23,10 +23,10 @@ angular.module('arvak.controllers').controller('LoginCtrl', ['$scope', 'template
     
     templateCache.getDataById(1)
         .then(function (data) {
-          $scope.message1 = 'loaded ';
-            myService.getDataById(1)
+          $scope.message1 = data;
+            templateCache.getDataById(1)
                 .then(function (data) {
-                    $scope.message2 = 'loaded ';
+                    $scope.message2 = data;
                 });
         });
 
