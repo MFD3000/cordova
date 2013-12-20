@@ -59,7 +59,7 @@ angular.module('cordova.services').factory('geolocation', function ($rootScope, 
 
 angular.module('cordova.services').factory('camera', function ($rootScope, cordovaReady) {
   return {
-    getCurrentPosition: cordovaReady(function (onSuccess, onError, options) {
+    getPicture: cordovaReady(function (onSuccess, onError, options) {
         navigator.camera.getPicture(function () {
                var that = this,
                args = arguments;
@@ -189,26 +189,27 @@ angular.module('arvak.services').factory('navSvc', function($navigate) {
 
 angular.module('cordova.services').factory('compass', function ($rootScope, cordovaReady) {
     return {
-        getCurrentHeading: cordovaReady(function (onSuccess, onError) {
-            navigator.compass.getCurrentHeading(function () {
-                var that = this,
-                    args = arguments;
+        getCurrentHeading: cordovaReady(function (onSuccess, onError, options) {
+        navigator.compass.getCurrentHeading(function () {
+               var that = this,
+               args = arguments;
 
-                if (onSuccess) {
-                    $rootScope.$apply(function () {
+               if (onSuccess) {
+                   $rootScope.$apply(function () {
                         onSuccess.apply(that, args);
-                    });
-                }
-            }, function () {
-                var that = this,
+                   });
+                   }
+               }, function () {
+                    var that = this,
                     args = arguments;
 
-                if (onError) {
-                    $rootScope.$apply(function () {
-                        onError.apply(that, args);
-                    });
-                }
-            });
+                   if (onError) {
+                        $rootScope.$apply(function () {
+                            onError.apply(that, args);
+                        });
+                   }
+               },
+            options);
         })
     };
 });
@@ -216,9 +217,30 @@ angular.module('cordova.services').factory('compass', function ($rootScope, cord
 angular.module('cordova.services').factory('contactsSvc', function ($rootScope, cordovaReady) {
     return {
         findContacts: cordovaReady(function (fields, onSuccess, onError, options) {
-            
-            navigator.contacts.find(fields,onSuccess, onError, options);
+        navigator.contacts.find(fields, function () {
+               var that = this,
+               args = arguments;
+
+               if (onSuccess) {
+                   $rootScope.$apply(function () {
+                        onSuccess.apply(that, args);
+                   });
+                   }
+               }, function () {
+                    var that = this,
+                    args = arguments;
+
+                   if (onError) {
+                        $rootScope.$apply(function () {
+                            onError.apply(that, args);
+                        });
+                   }
+               },
+            options);
         })
+
+
+
     }
 });
 
