@@ -74,7 +74,7 @@ angular.module('arvak.controllers').controller('DeviceCtrl', ['$scope', 'device'
 angular.module('arvak.controllers').controller('CompassCtrl', ['$scope', 'compass', function($scope, compass) {
     compass.getCurrentHeading(function (heading) {
         $scope.heading  = heading;
-        $scope.$apply();
+       
     },function(e) { console.log("Error finding compass " + e.code) });
 }]);
 
@@ -111,7 +111,7 @@ angular.module('arvak.controllers').controller('ContactsCtrl',['$scope', 'contac
         var fields = ["displayName", "name", "phoneNumbers"];
         contactsSvc.findContacts(fields,function(contacts) {
             $scope.contacts=contacts;
-            $scope.$apply();
+           
         },function(e){console.log("Error finding contacts " + e.code)},options);
     }
 }]);
@@ -130,7 +130,7 @@ angular.module('arvak.controllers').controller('CameraCtrl', ['$scope', 'camera'
     var onSuccess = function(imageData) {
         console.log("On Success! ");
         $scope.picData = "data:image/jpeg;base64," +imageData;
-        $scope.$apply();
+        //$scope.$apply();
     };
     var onFail = function(e) {
         console.log("On fail " + e);
