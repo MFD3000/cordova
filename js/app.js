@@ -17,5 +17,6 @@ angular.module('arvak', ['arvak.controllers', 'arvak.filters', 'arvak.services',
         $routeProvider.when('/view7', {templateUrl: 'partials/compassView.html'});
         $routeProvider.when('/view8', {templateUrl: 'partials/hackerNewsView.html'});
         $routeProvider.when('/view9', {templateUrl: 'partials/connectionView.html'});
+        $routeProvider.when('/view10', {templateUrl: 'partials/localStorageView.html'});
         $routeProvider.otherwise({redirectTo: '/'});
   }]);

@@ -19,15 +19,12 @@ angular.module('arvak.controllers').controller('HomeCtrl', ['$scope','navSvc','$
 }]);
 
 
-angular.module('arvak.controllers').controller('LoginCtrl', ['$scope', 'templateCache', function($scope, templateCache){
-    
+angular.module('arvak.controllers').controller('LoginCtrl', ['$scope', 'templateCache','networkConnection', function($scope, templateCache, networkConnection) {
+    $scope.hasConnection = networkConnection.hasConnection();
     templateCache.getDataById(1)
         .then(function (data) {
-          $scope.message1 = data;
-            templateCache.getDataById(1)
-                .then(function (data) {
-                    $scope.message2 = data;
-                });
+          $scope.template = data;
+            
         });
 
 
@@ -91,7 +88,7 @@ angular.module('arvak.controllers').controller('DeviceCtrl', ['$scope', 'device'
 angular.module('arvak.controllers').controller('CompassCtrl', ['$scope', 'compass', function($scope, compass) {
     compass.getCurrentHeading(function (heading) {
         $scope.heading  = heading;
-       
+        alert(heading);
     },function(e) { console.log("Error finding compass " + e.code) });
 }]);
 
